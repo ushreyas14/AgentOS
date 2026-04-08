@@ -6,6 +6,7 @@ Each function below simulates an MCP tool call (like calling a real server).
 """
 
 from google.adk.agents import Agent
+from config import GEMINI_MODEL
 
 
 # ── Simulated MCP Tool Store ──────────────────────────────────────────────────
@@ -67,7 +68,7 @@ def mark_task_done(task_id: int) -> dict:
 
 task_agent = Agent(
     name="task_agent",
-    model="gemini-2.5-flash-lite",
+    model=GEMINI_MODEL,
     description=(
         "Manages the user's task list. "
         "Can add tasks, list all tasks, and mark tasks as done."

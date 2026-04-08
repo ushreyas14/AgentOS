@@ -6,6 +6,7 @@ Each function simulates an MCP tool call to a calendar backend.
 """
 
 from google.adk.agents import Agent
+from config import GEMINI_MODEL
 
 
 # ── Simulated MCP Tool Store ──────────────────────────────────────────────────
@@ -69,7 +70,7 @@ def delete_reminder(event_id: int) -> dict:
 
 calendar_agent = Agent(
     name="calendar_agent",
-    model="gemini-2.5-flash-lite",
+    model=GEMINI_MODEL,
     description=(
         "Manages the user's calendar and reminders. "
         "Can set reminders, list upcoming events, and delete reminders."

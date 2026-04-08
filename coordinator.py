@@ -48,12 +48,12 @@ def plan(user_message: str, api_key: str) -> list[dict]:
     Single Gemini API call — returns action plan as list of dicts.
     """
     try:
-        client = genai.Client(api_key=api_key)
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=user_message,
-            config={"system_instruction": _SYSTEM_PROMPT},
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel(
+            model_name=GEMINI_MODEL,
+            system_instruction=_SYSTEM_PROMPT
         )
+        response = model.generate_content(user_message)
         raw = response.text.strip()
 
         # Strip markdown fences if model adds them
