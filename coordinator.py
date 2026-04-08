@@ -8,7 +8,7 @@ Returns a structured JSON action plan for the executor.
 import os
 import json
 import google.api_core.exceptions as api_exceptions
-import google.genai as genai
+import google.generativeai as genai
 
 from config import GEMINI_MODEL
 

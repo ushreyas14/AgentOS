@@ -22,7 +22,7 @@ def _check_dependencies() -> None:
     # which might not register a top-level `google.adk` module directly
     # in a way `__import__` can easily find without the rest of google-cloud.
     # A more robust check might be needed if issues persist.
-    for pkg in ["google.genai", "streamlit"]:
+    for pkg in ["google.generativeai", "google.adk", "streamlit"]:
         try:
             __import__(pkg.replace("-", "_"))
         except ImportError:
@@ -41,7 +41,7 @@ from config import GEMINI_MODEL
 from coordinator import coordinator
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
-from google.genai import types as genai_types
+from google.generativeai import types as genai_types
 
 
 # --- Async Helper ---

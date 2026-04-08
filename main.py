@@ -19,7 +19,7 @@ import asyncio
 # ── Dependency guard ──────────────────────────────────────────────────────────
 def _check_dependencies() -> None:
     missing = []
-    for pkg in ["google.adk", "google.genai"]:
+    for pkg in ["google.adk", "google.generativeai"]:
         try:
             __import__(pkg.replace("-", "_"))
         except ImportError:
@@ -34,7 +34,7 @@ _check_dependencies()
 # ── ADK imports ───────────────────────────────────────────────────────────────
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
-from google.genai import types as genai_types
+from google.generativeai import types as genai_types
 
 from coordinator import coordinator
 from config import GEMINI_MODEL

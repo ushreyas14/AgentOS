@@ -20,10 +20,10 @@ import time
 
 # ── Try to import the Google GenAI SDK ────────────────────────────────────────
 try:
-    import google.genai as genai
+    import google.generativeai as genai
 except ImportError:
-    print("[ERROR] 'google-genai' is not installed.")
-    print("        Run:  pip install google-genai")
+    print("[ERROR] 'google-generativeai' is not installed.")
+    print("        Run:  pip install google-generativeai")
     sys.exit(1)
 
 from config import GEMINI_MODEL
