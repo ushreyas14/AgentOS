@@ -6,6 +6,7 @@ Each function simulates an MCP tool call to a notes backend.
 """
 
 from google.adk.agents import Agent
+from config import GEMINI_MODEL
 
 
 # ── Simulated MCP Tool Store ──────────────────────────────────────────────────
@@ -94,7 +95,7 @@ def delete_note(note_id: int) -> dict:
 
 notes_agent = Agent(
     name="notes_agent",
-    model="gemini-2.5-flash-lite",
+    model=GEMINI_MODEL,
     description=(
         "Manages the user's notes. "
         "Can save notes with tags, list notes, search by keyword, and delete notes."

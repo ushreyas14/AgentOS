@@ -56,15 +56,23 @@ def plan(user_message: str, api_key: str) -> list[dict]:
         response = model.generate_content(user_message)
         raw = response.text.strip()
 
-        # Strip markdown fences if model adds them
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        raw = raw.strip()
+        # Attempt to extract JSON array from the raw response
+        # This makes parsing more robust to extraneous text or markdown fences
+        json_start = raw.find('[')
+        json_end = raw.rfind(']')
+        if json_start != -1 and json_end != -1 and json_end > json_start:
+            json_str = raw[json_start : json_end + 1]
+        else:
+            # Fallback if no clear JSON array delimiters are found
+            # Try stripping markdown fences as a last resort
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            json_str = raw.strip()
 
         try:
-            actions = json.loads(raw)
+            actions = json.loads(json_str)
             return actions if isinstance(actions, list) else []
         except json.JSONDecodeError:
             # Log the raw response that caused the JSON error for debugging

@@ -80,14 +80,15 @@ def test_gemini_call() -> bool:
         _fail("Skipped — no API key.")
         return False
 
-    # NEW SDK INITIALIZATION
-    client = genai.Client(api_key=key)
+    # Configure the GenAI library with the API key
+    genai.configure(api_key=key)
+    # Initialize the model
+    model = genai.GenerativeModel(model_name=GEMINI_MODEL)
 
     try:
         start = time.time()
-        # NEW SDK GENERATION CALL
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
+        # Make the generation call
+        response = model.generate_content(
             contents='Reply with exactly one word: OK'
         )
         elapsed = round(time.time() - start, 2)
@@ -117,16 +118,17 @@ def test_quota_detection() -> bool:
         _fail("Skipped — no API key.")
         return False
 
-    # NEW SDK INITIALIZATION
-    client = genai.Client(api_key=key)
+    # Configure the GenAI library with the API key
+    genai.configure(api_key=key)
+    # Initialize the model
+    model = genai.GenerativeModel(model_name=GEMINI_MODEL)
     prompt = "1+1="
 
     quota_hit = False
     for i in range(3):          # 3 rapid calls — enough to observe quota headers
         try:
-            # NEW SDK GENERATION CALL
-            client.models.generate_content(
-                model=GEMINI_MODEL,
+            # Make the generation call
+            model.generate_content(
                 contents=prompt
             )
             _pass(f"Request {i + 1}/3 succeeded")
@@ -162,13 +164,14 @@ def test_billing_detection() -> bool:
         _fail("Skipped — no API key.")
         return False
 
-    # NEW SDK INITIALIZATION
-    client = genai.Client(api_key=key)
+    # Configure the GenAI library with the API key
+    genai.configure(api_key=key)
+    # Initialize the model
+    model = genai.GenerativeModel(model_name=GEMINI_MODEL)
 
     try:
-        # NEW SDK GENERATION CALL
-        client.models.generate_content(
-            model=GEMINI_MODEL,
+        # Make the generation call
+        model.generate_content(
             contents='ping'
         )
         _pass("No billing errors detected — project appears healthy.")
