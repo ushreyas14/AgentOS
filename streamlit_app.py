@@ -65,15 +65,17 @@ st.set_page_config(page_title="Multi-Agent System", page_icon="🤖")
 st.title("🤖 Multi-Agent Productivity System")
 
 # --- API Key Check ---
-if "GOOGLE_API_KEY" not in os.environ:
-    st.error("🚨 GOOGLE_API_KEY environment variable not set!")
+google_api_key = st.secrets.get("GOOGLE_API_KEY")
+if not google_api_key:
+    st.error("🚨 GOOGLE_API_KEY not found in Streamlit secrets!")
     st.info(
-        "Please set the GOOGLE_API_KEY environment variable to run this app. "
+        "Please add the GOOGLE_API_KEY to your Streamlit secrets to run this app. "
         "You can get a key from the Google AI Studio."
     )
-    st.code("export GOOGLE_API_KEY='your-api-key-here'", language="bash")
+    st.code("GOOGLE_API_KEY='your-api-key-here'", language="toml")
     st.stop()
-
+# Set the environment variable for ADK/GenAI library if it expects it from os.environ
+os.environ["GOOGLE_API_KEY"] = google_api_key
 st.caption(f"Powered by Google ADK + {GEMINI_MODEL}")
 
 # --- Sidebar ---

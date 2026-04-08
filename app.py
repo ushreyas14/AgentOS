@@ -159,9 +159,8 @@ if "submitted_message" not in st.session_state:
 # API key loaded silently — never shown in the UI
 def _get_api_key() -> str:
     """Read key from Streamlit secrets (cloud) or env var (local/Cloud Shell)."""
-    if "GOOGLE_API_KEY" in st.secrets:
-        return st.secrets["GOOGLE_API_KEY"]
-    return os.environ.get("GOOGLE_API_KEY", "")
+    # Prioritize Streamlit secrets, fall back to environment variable for local testing
+    return st.secrets.get("GOOGLE_API_KEY", os.environ.get("GOOGLE_API_KEY", ""))
 
 
 # ── Core pipeline ─────────────────────────────────────────────────────────────
